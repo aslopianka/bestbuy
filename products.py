@@ -1,7 +1,17 @@
+"""
+This module defines the Product class, which represents a product in the store.
+"""
 class Product:
+    """
+    Represents a product with a name, price, quantity, and active status.
+    """
     total_items_count = 0
 
     def __init__(self, name, price, quantity, active=True):
+        """
+        Initializes a new product.
+        Checks for valid input types and values.
+        """
 
         if not isinstance(name, str):
             raise TypeError("Product name must be a string text.")
@@ -28,9 +38,15 @@ class Product:
         Product.total_items_count += 1
 
     def get_quantity(self):
+        """
+        Returns the current quantity of the product.
+        """
         return self.quantity
 
     def set_quantity(self, quantity):
+        """
+        Updates the product quantity.
+        """
         if not isinstance(quantity, int):
             raise TypeError("Quantity must be a whole integer number.")
         if quantity < 0:
@@ -38,20 +54,36 @@ class Product:
         self.quantity = quantity
 
     def is_active(self):
+        """
+        Returns True if the product is active, False otherwise.
+        """
         return self.active
 
     def activate(self):
+        """
+        Sets the product status to active.
+        """
         self.active = True
 
     def deactivate(self):
+        """
+        Sets the product status to inactive.
+        """
         self.active = False
 
     def show(self):
+        """
+        Prints the product details.
+        """
         print(f"Product name: {self.name}, Price {self.price}, Quantity {self.quantity}")
 
     def buy(self, quantity):
+        """
+        Processes a purchase of the product.
+        Reduces quantity and returns total price.
+        """
         if quantity > self.quantity:
-            raise ValueError("Not enough quantity in stock.")
+            raise ValueError(f"Not enough quantity of {self.name} in stock.")
         self.quantity -= quantity
         return self.price * quantity
 
