@@ -67,7 +67,6 @@ def get_order_input(items_in_store):
             print(f"Please choose a number between 1 and {len(items_in_store)}.")
             continue
 
-        # The link: the list is shown 1-based, so subtract 1 to get the list index.
         chosen_product = items_in_store[product_number_to_add - 1]
 
         amount_input = input(f"How many of '{chosen_product.name}' do you want? ")
@@ -82,12 +81,13 @@ def get_order_input(items_in_store):
             continue
 
         selected_products.append((chosen_product, amount))
+
         print(f"Added {amount} x {chosen_product.name} to your order.")
 
 
 def list_all_items(products_to_list=None):
     """
-    Prints the products as a numbered (1-based) list.
+    Prints the products as a numbered list.
 
     If no list is given, fetches all products from the store.
     """
@@ -101,6 +101,7 @@ def list_all_items(products_to_list=None):
     print("----")
 
     return None
+
 
 def show_total_amount_in_store():
     """Prints the total quantity of items currently in the store."""
