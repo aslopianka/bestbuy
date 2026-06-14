@@ -34,7 +34,7 @@ class Store:
         """
         Returns the total number of products in the store.
         """
-        return len(self.items)
+        return sum(item.quantity for item in self.items)
 
     def get_all_products(self):
         """

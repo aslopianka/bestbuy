@@ -60,12 +60,18 @@ def list_all_items():
 
     return None
 
+def show_total_amount_in_store():
+    total_amount = best_buy.get_total_quantity()
+    print(f"\n Total of {total_amount} items in store.")
+
+    return None
+
 
 def get_corresponding_action(menu_choice):
     """Returns the action callable for the given menu choice."""
     actions = {
         1: list_all_items,
-        2: best_buy.get_total_quantity,
+        2: show_total_amount_in_store,
         3: process_order,
         4: quit_program
     }
