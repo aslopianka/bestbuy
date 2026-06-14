@@ -1,6 +1,7 @@
 """
 This module defines the Product class, which represents a product in the store.
 """
+
 class Product:
     """
     Represents a product with a name, price, quantity, and active status.

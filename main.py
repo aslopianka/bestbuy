@@ -8,7 +8,6 @@ import products
 import store
 import sys
 
-from products import Product
 
 # set up initial stock of inventory
 product_list = [ products.Product("MacBook Air M2", price=1450, quantity=100),

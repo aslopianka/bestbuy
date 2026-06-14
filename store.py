@@ -1,7 +1,6 @@
 """
 This module contains the Store class which manages a collection of products.
 """
-import products
 
 class Store:
     """
