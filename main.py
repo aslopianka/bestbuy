@@ -32,28 +32,49 @@ def quit_program():
 
 
 def get_order_input(items_in_store):
-    still_ordering = True
     selected_products = []
 
-    while still_ordering:
-        print("When you want to finish order, enter empty text.")
-        product_number_to_add = input("Which product # do you want?")
+    while True:
+        print("When you want to finish the order, enter empty text.")
+        product_number_to_add = input("Which product # do you want? ")
 
-        if not product_number_to_add or product_number_to_add == "":
+        if not product_number_to_add:
             return selected_products
 
         try:
             product_number_to_add = int(product_number_to_add)
-        except ValueError as e:
-            print("Please enter a valid integer that represents a product form the list.")
+        except ValueError:
+            print("Please enter a valid integer that represents a product from the list.")
             continue
 
+        if product_number_to_add < 1 or product_number_to_add > len(items_in_store):
+            print(f"Please choose a number between 1 and {len(items_in_store)}.")
+            continue
 
-def list_all_items():
-    all_products = best_buy.get_all_products()
+        # The link: the list is shown 1-based, so subtract 1 to get the list index.
+        chosen_product = items_in_store[product_number_to_add - 1]
+
+        amount_input = input(f"How many of '{chosen_product.name}' do you want? ")
+        try:
+            amount = int(amount_input)
+        except ValueError:
+            print("Please enter a valid whole number for the amount.")
+            continue
+
+        if amount < 1:
+            print("Amount must be at least 1.")
+            continue
+
+        selected_products.append((chosen_product, amount))
+        print(f"Added {amount} x {chosen_product.name} to your order.")
+
+
+def list_all_items(products_to_list=None):
+    if products_to_list is None:
+        products_to_list = best_buy.get_all_products()
 
     print("----")
-    for index, product in enumerate(all_products, start=1):
+    for index, product in enumerate(products_to_list, start=1):
         print(f"{index}. ", end="")
         product.show()
     print("----")
@@ -83,16 +104,18 @@ def get_corresponding_action(menu_choice):
 
 
 def process_order():
-    # should show all items with numbers
     items_in_store = best_buy.get_all_products()
-    for item in items_in_store:
-        item.show()
+
+    list_all_items(items_in_store)
 
     ordered_items = get_order_input(items_in_store)
-    print(ordered_items)
-    # should add selected item to cart -> call product.buy
-    # when empty input added -> return card and call store.order with cart content
-    return [('item1', 1),('item2', 2)]
+
+    if not ordered_items:
+        return None
+
+    total_price = best_buy.order(ordered_items)
+    print(f"\n Order made! Total payment: ${total_price}")
+    return None
 
 
 def main():
