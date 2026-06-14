@@ -1,3 +1,9 @@
+"""
+Entry point for the store application.
+
+Sets up the initial inventory and runs the interactive command-line menu
+that lets the user list products, view total stock, and place orders.
+"""
 import products
 import store
 import sys
@@ -12,6 +18,7 @@ product_list = [ products.Product("MacBook Air M2", price=1450, quantity=100),
 best_buy = store.Store(product_list)
 
 def start(store_instance):
+    """Displays the menu for the given store instance."""
     display_menu()
 
 
@@ -32,6 +39,15 @@ def quit_program():
 
 
 def get_order_input(items_in_store):
+    """
+    Prompts the user to build an order from the given product list.
+
+    Repeatedly asks for a product number (1-based, matching the displayed
+    list) and an amount, validating each entry. An empty product number
+    finishes the order.
+
+    Returns a list of (Product, amount) tuples ready for Store.order.
+    """
     selected_products = []
 
     while True:
@@ -70,6 +86,11 @@ def get_order_input(items_in_store):
 
 
 def list_all_items(products_to_list=None):
+    """
+    Prints the products as a numbered (1-based) list.
+
+    If no list is given, fetches all products from the store.
+    """
     if products_to_list is None:
         products_to_list = best_buy.get_all_products()
 
@@ -82,6 +103,7 @@ def list_all_items(products_to_list=None):
     return None
 
 def show_total_amount_in_store():
+    """Prints the total quantity of items currently in the store."""
     total_amount = best_buy.get_total_quantity()
     print(f"\n Total of {total_amount} items in store.")
 
@@ -104,6 +126,12 @@ def get_corresponding_action(menu_choice):
 
 
 def process_order():
+    """
+    Runs the full ordering flow.
+
+    Displays the products, collects the user's selections, and places the
+    order through the store, printing the total payment.
+    """
     items_in_store = best_buy.get_all_products()
 
     list_all_items(items_in_store)
