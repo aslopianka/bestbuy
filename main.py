@@ -2,6 +2,8 @@ import products
 import store
 import sys
 
+from products import Product
+
 # set up initial stock of inventory
 product_list = [ products.Product("MacBook Air M2", price=1450, quantity=100),
                  products.Product("Bose QuietComfort Earbuds", price=250, quantity=500),
@@ -29,12 +31,42 @@ def quit_program():
     sys.exit()
 
 
+def get_order_input(items_in_store):
+    still_ordering = True
+    selected_products = []
+
+    while still_ordering:
+        print("When you want to finish order, enter empty text.")
+        product_number_to_add = input("Which product # do you want?")
+
+        if not product_number_to_add or product_number_to_add == "":
+            return selected_products
+
+        try:
+            product_number_to_add = int(product_number_to_add)
+        except ValueError as e:
+            print("Please enter a valid integer that represents a product form the list.")
+            continue
+
+
+def list_all_items():
+    all_products = best_buy.get_all_products()
+
+    print("----")
+    for index, product in enumerate(all_products, start=1):
+        print(f"{index}. ", end="")
+        product.show()
+    print("----")
+
+    return None
+
+
 def get_corresponding_action(menu_choice):
     """Returns the action callable for the given menu choice."""
     actions = {
-        1: best_buy.get_all_products,
+        1: list_all_items,
         2: best_buy.get_total_quantity,
-        3: get_order,
+        3: process_order,
         4: quit_program
     }
 
@@ -44,7 +76,16 @@ def get_corresponding_action(menu_choice):
     return actions[menu_choice]
 
 
-def get_order():
+def process_order():
+    # should show all items with numbers
+    items_in_store = best_buy.get_all_products()
+    for item in items_in_store:
+        item.show()
+
+    ordered_items = get_order_input(items_in_store)
+    print(ordered_items)
+    # should add selected item to cart -> call product.buy
+    # when empty input added -> return card and call store.order with cart content
     return [('item1', 1),('item2', 2)]
 
 
@@ -63,7 +104,8 @@ def main():
         try:
             action = get_corresponding_action(users_choice)
             result = action()
-            print(result)
+            if result:
+                print(result)
 
         except (ValueError, KeyError, TypeError) as e:
             print(e)

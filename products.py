@@ -37,6 +37,7 @@ class Product:
         self.active = active
         Product.total_items_count += 1
 
+
     def get_quantity(self):
         """
         Returns the current quantity of the product.
@@ -75,7 +76,7 @@ class Product:
         """
         Prints the product details.
         """
-        print(f"{self.name}, Price {self.price}, Quantity {self.quantity}")
+        print(f"{self.name}, Price: ${self.price}, Quantity: {self.quantity}")
 
     def buy(self, quantity):
         """
