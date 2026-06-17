@@ -6,7 +6,6 @@ class Store:
     """
     Represents a store that holds products and handles orders.
     """
-    items = []
     def __init__(self, items):
         """
         Initializes the store with a list of products.
@@ -33,13 +32,13 @@ class Store:
         """
         Returns the total number of products in the store.
         """
-        return sum(item.quantity for item in self.items)
+        return sum(item.quantity for item in self.items if item.active == True)
 
     def get_all_products(self):
         """
         Returns a list of all products in the store.
         """
-        return self.items
+        return [item for item in self.items if item.active == True]
 
     def order(self, ordered_items_with_quantity):
         """

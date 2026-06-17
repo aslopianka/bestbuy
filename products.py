@@ -8,7 +8,7 @@ class Product:
     """
     total_items_count = 0
 
-    def __init__(self, name, price, quantity, active=True):
+    def __init__(self, name, price, quantity):
         """
         Initializes a new product.
         Checks for valid input types and values.
@@ -29,13 +29,11 @@ class Product:
         if quantity < 0:
             raise ValueError("Quantity cannot be a negative value.")
 
-        if not isinstance(active, bool):
-            raise TypeError("Active status must be a boolean value (True or False).")
 
         self.name = name
         self.price = price
         self.quantity = quantity
-        self.active = active
+        self.active = True
         Product.total_items_count += 1
 
 
@@ -53,7 +51,12 @@ class Product:
             raise TypeError("Quantity must be a whole integer number.")
         if quantity < 0:
             raise ValueError("Quantity cannot be a negative value.")
+
         self.quantity = quantity
+
+        if self.quantity == 0:
+            self.active = False
+        else: self.active = True
 
     def is_active(self):
         """
@@ -65,12 +68,16 @@ class Product:
         """
         Sets the product status to active.
         """
-        self.active = True
+        if self.quantity == 0:
+            raise ValueError('The quantity is too low to set this item active.')
+        else:
+            self.active = True
 
     def deactivate(self):
         """
         Sets the product status to inactive.
         """
+
         self.active = False
 
     def show(self):
