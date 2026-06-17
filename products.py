@@ -93,5 +93,5 @@ class Product:
         """
         if quantity > self.quantity:
             raise ValueError(f"Not enough quantity of {self.name} in stock.")
-        self.quantity -= quantity
+        self.set_quantity(self.quantity - quantity)
         return self.price * quantity
